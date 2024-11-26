@@ -1,28 +1,31 @@
 import requests
 
-API_URL = "http://127.0.0.1:5000/products"
+BASE_URL = "http://127.0.0.1:5000"
 
-# Add a new product
 def add_product(name, description, price):
-    data = {"name": name, "description": description, "price": price}
-    response = requests.post(API_URL, json=data)
+    payload = {
+        "name": name,
+        "description": description,
+        "price": price
+    }
+    response = requests.post(f"{BASE_URL}/products", json=payload)
     if response.status_code == 201:
-        print("Product added successfully:", response.json())
+        print("Product added:", response.json())
     else:
         print("Failed to add product:", response.json())
 
-# Retrieve all products
 def get_products():
-    response = requests.get(API_URL)
+    response = requests.get(f"{BASE_URL}/products")
     if response.status_code == 200:
-        print("List of products:")
-        for product in response.json():
-            print(product)
+        print("Products retrieved:", response.json())
     else:
         print("Failed to retrieve products:", response.json())
 
-if __name__ == '__main__':
-    # Example usage
-    add_product("Laptop", "A high-performance laptop", 1500.0)
-    add_product("Mouse", "Wireless mouse", 25.5)
+if __name__ == "__main__":
+    # Adding products
+    add_product("Laptop", "High-performance laptop", 999.99)
+    add_product("Smartphone", "Latest model smartphone", 799.49)
+    
+    # Retrieving products
     get_products()
+
